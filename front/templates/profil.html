@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum - Profil</title>
+  <link rel="stylesheet" type="text/css" href="/front/static/style.css" />
+  <link rel="stylesheet" type="text/css" href="/front/static/topics.css">
+  <link rel="stylesheet" type="text/css" href="/front/static/profil.css">
+</head>
+
+<body onbeforeunload="var xhr = new XMLHttpRequest(); xhr.open('GET', '/bye', true); xhr.send();">
+  <!-- Header -->
+  <header>
+    <h1>Forum</h1>
+  </header>
+  <!-- navigation bar -->
+  <nav class="nav-bar">
+    <ul>
+      <li style="float: left">
+        <a class="home" href="/"><img src="/front/static/imgs/home.png" alt="Home" /></a>
+      </li>
+      {{if eq .User.Connected 1}}
+      <li style="float: right">
+        <a class="open-form" href="/disconnect"><b>Deconnexion</b></a>
+      </li>
+      <li style="float: right">
+        <a href="/profile"><b>{{.User.Username}}</b></a>
+      </li>
+      {{if eq .User.Role 2}}
+      <li style="float: right">
+        <a href="/adminPanel"><b>AdminPanel</b></a>
+      </li>
+      {{end}}
+      {{end}}
+    </ul>
+  </nav>
+  <!-- mobile navigation bar -->
+  <nav class="mobile-nav-bar">
+    <a class="home" href="/"><img src="front/static/imgs/home.png" alt="Home" /></a>
+    <label for="mobile-menu" tabindex="0" style="float: right">Menu</label>
+    <input id="mobile-menu" type="checkbox">
+    <div class="menu">
+      <ul>
+        {{if eq .User.Connected 1}}
+        {{if eq .User.Role 2}}
+        <li style="float: right">
+          <a href="/adminPanel"><b>AdminPanel</b></a>
+        </li>
+        {{end}}
+        <li>
+          <a href="/profile"><b>{{.User.Username}}</b></a>
+        </li>
+        <li>
+          <a class="open-form" href="/disconnect"><b>Deconnexion</b></a>
+        </li>
+        {{end}}
+      </ul>
+    </div>
+  </nav>
+  <!-- Breadcrumb -->
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><span aria-current="page">Profile</span></li>
+    </ul>
+  </nav>
+  <!DOCTYPE html>
+  <!-- Content -->
+  <div class="content">
+    <section class="center">
+      <article>
+        <div class="profile-content">
+          <img src="{{.User.ImagePath}}" class="pfp" />
+          <div class="profile-info">
+            <table cellpadding="0" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td class="label">Email</td>
+                  <td>{{.User.Email}}</td>
+                </tr>
+                <tr>
+                  <td class="label">Username</td>
+                  <td>{{.User.Username}}</td>
+                </tr>
+                <tr>
+                  <td class="label">Registration Date</td>
+                  <td>{{.User.RegistrationDate}}</td>
+                </tr>
+                <tr>
+                  <td class="label">Role</td>
+                  <td>{{if eq .User.Role 0}}Member
+                    {{else if eq .User.Role 1}}Moderator
+                    {{else if eq .User.Role 2}}Administator
+                    {{end}}</td>
+                </tr>
+                <tr>
+                  <td>
+                    {{if eq .User.Role 0}}
+                    <form action="/profile" method="post">
+                      <button type="submit" name="mod-request" value="{{.User.Id}}">Request
+                        to be moderator
+                      </button>
+                    </form>
+                    {{end}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+      <article>
+        <div class="main-content-nav">
+          <ul>
+            <li>
+              <form action="" method="post">
+                <button name="filtre" value="liked" type="submit">Filter by post liked quantity</button>
+                <button name="filtre" value="reset" type="submit">Reset filter</button>
+              </form>
+            </li>
+          </ul>
+        </div>
+        <div class="box-topic">
+          <div class="inner-box-topic">
+            <div class="topic-header">
+              <ul>
+                <li>Title</li>
+                <li>Author</li>
+                <li>Message</li>
+                <li style="text-align: center">Categorie(s)</li>
+                <li style="text-align: center">Reply(s)</li>
+                <li style="text-align: center">Like(s)</li>
+              </ul>
+            </div>
+            <div class="topics">
+              {{range .Posts}}
+              <a href="/post/{{.Id}}" class="topic-link">
+                <ul>
+                  <li>
+                    <div class="topic-name">{{.Name}}</div>
+                  </li>
+                  <li>
+                    <div class="topic-author-name">{{.NameCreator}}</div>
+                  </li>
+                  <li>
+                    <div class="topic-description">
+                      {{.Description}}
+                    </div>
+                  </li>
+                  <li style="text-align: center">
+                    {{range .NameCategories}}
+                    {{.}}
+                    <br>
+                    {{end}}
+                  </li>
+                  <li style="text-align: center">{{.ReplyQuantity}}</li>
+                  <li style="text-align: center">{{.Likes.Quantity}}</li>
+                </ul>
+              </a>
+              {{end}}
+            </div>
+          </div>
+        </div>
+    </section>
+    </article>
+  </div>
+  <!-- Footer -->
+  <footer>Copyright</footer>
+</body>
+
+</html>

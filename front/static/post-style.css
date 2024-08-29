@@ -1,0 +1,158 @@
+.section-style {
+  display: flex;
+}
+
+/* Style the article element representing a topic post */
+.topic-post {
+  position: sticky;
+  top: 80px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  width: 40%;
+  height: fit-content;
+}
+
+/* Style the header of the topic post */
+.topic-post-header {
+  margin-bottom: 10px;
+}
+
+/* Style the title of the topic post */
+.topic-post-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  max-width: fit-content;
+}
+
+/* Style the author's name and the date */
+.topic-post-author,
+.topic-post-date {
+  font-size: 14px;
+  color: #888;
+  margin: 0;
+  margin-left: 20px;
+}
+
+.topic-post-categories {
+  margin-left: 20px;
+}
+
+/* Style the content of the topic post */
+.topic-post-content {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 20px;
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+}
+
+.post-likes-dislikes {
+  text-align: center;
+}
+
+.post-likes-dislikes button {
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* comment */
+.comment-section {
+  margin-left: 3vw;
+  width: 55%;
+}
+
+.comment-post {
+  border: 1px solid #ccc;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.comment-post-content {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-left: 20px;
+  margin-right: 20px;
+  overflow-wrap: break-word;
+}
+
+.comment-section h2 {
+  text-align: center;
+  font-size: 36px;
+}
+
+/* reply form */
+.reply-form {
+  text-align: center;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: rgb(166, 166, 166);
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.inner-reply-form h2 {
+  margin-top: 10px;
+  color: black;
+}
+
+.inner-reply-form {
+  width: 100%;
+  height: auto;
+  padding: 0 0 20px 0;
+}
+
+.inner-reply-form #text {
+  width: 90%;
+  height: 100px;
+  border-radius: 5px;
+  resize: none;
+  padding: 5px;
+  margin: 5px 0 8px 0;
+  border: none;
+  background-color: #f1f1f1;
+}
+
+.inner-reply-form #text:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.inner-reply-form button[type="submit"] {
+  border-radius: 5px;
+  width: 25%;
+}
+
+.post-pfp {
+  margin: 0 0 20px 20px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 50%;
+}
+
+@media only screen and (max-width: 1024px) {
+  .section-style {
+    display: block;
+  }
+
+  .topic-post {
+    top: 0;
+  }
+
+  .topic-post,
+  .comment-section {
+    position: relative;
+    margin: auto;
+    width: 90%;
+  }
+}

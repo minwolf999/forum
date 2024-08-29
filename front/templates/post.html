@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum - Post</title>
+  <link rel="stylesheet" type="text/css" href="/front/static/style.css" />
+  <link rel="stylesheet" type="text/css" href="/front/static/post-style.css" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body onbeforeunload="var xhr = new XMLHttpRequest(); xhr.open('GET', '/bye', true); xhr.send();">
+  <!-- Header -->
+  <header>
+    <h1>Forum</h1>
+  </header>
+  <!-- navigation bar -->
+  <nav class="nav-bar">
+    <ul>
+      <li style="float: left">
+        <a class="home" href="/"><img src="/front/static/imgs/home.png" alt="Home" /></a>
+      </li>
+      {{if eq .User.Connected 1}}
+      <li style="float: right">
+        <a class="open-form" href="/disconnect"><b>Deconnexion</b></a>
+      </li>
+      <li style="float: right">
+        <a href="/profile"><b>{{.User.Username}}</b></a>
+      </li>
+      {{else}}
+      <li style="float: right">
+        <!-- Button to pop up the login form -->
+        <a class="open-form" href="#login-form"><b>Login</b></a>
+      </li>
+      {{end}}
+    </ul>
+  </nav>
+  <!-- mobile navigation bar -->
+  <nav class="mobile-nav-bar">
+    <a class="home" href="/"><img src="/front/static/imgs/home.png" alt="Home" /></a>
+    <label for="mobile-menu" tabindex="0" style="float: right; cursor: pointer;">Menu</label>
+    <input id="mobile-menu" type="checkbox">
+    <div class="menu">
+      <ul>
+        {{if eq .User.Connected 1}}
+        <li>
+          <a href="/profile"><b>{{.User.Username}}</b></a>
+        </li>
+        <li>
+          <a class="open-form" href="/disconnect"><b>Deconnexion</b></a>
+        </li>
+        {{else}}
+        <li>
+          <!-- Button to pop up the login form -->
+          <a class="open-form" href="#login-form"><b>Login</b></a>
+        </li>
+        {{end}}
+      </ul>
+    </div>
+  </nav>
+  <!-- Login Form -->
+  <div class="form-popup-login" id="login-form">
+    <form method="post" action="?" class="form-container">
+      <a class="close-button" id="close-popup" href=""><img src="/front/static/imgs/close-icon.png" alt="close" /></a>
+      <h1>Sign-in</h1>
+      <p class="error">{{.Error.LoginError}}</p>
+      <label for="email">Email</label>
+      <br />
+      <input type="email" autocomplete="off" placeholder="Enter Email" name="login-email" required />
+      <br />
+      <label for="password">Password</label>
+      <br />
+      <input type="password" autocomplete="off" placeholder="Enter Password" name="login-psw" required />
+      <br />
+      <button type="submit" class="btn">Sign-in</button><br />
+
+      <hr class="hr-text" data-content="Or">
+      </hr>
+      <div class="other-sign-in">
+
+        <!------------------------------------------------------------------------------------------------------------------------------------------>
+        <div class="google">
+          <input type="hidden" name="userContent" id="userContentField" />
+
+          <div id="g_id_onload"
+            data-client_id="248993708423-96n44fem7sdpmk1hfv2b5tesp30iejbk.apps.googleusercontent.com"
+            data-auto_prompt="false" data-callback="handleCredentialResponse">
+          </div>
+
+          <div class="g_id_signin" data-type="standard"></div>
+
+          <script>
+            window.handleCredentialResponse = (response) => {
+              document.getElementById("userContentField").value =
+                JSON.stringify(response);
+              document.getElementById("pushbutton").submit();
+            }
+          </script>
+        </div>
+
+        <div class="github">
+          <a href="https://github.com/login/oauth/authorize?client_id=95d7187086635e790a24">
+            <img id="imgGithub" src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Connect with github"
+              width="50px" />
+          </a>
+        </div>
+        <!------------------------------------------------------------------------------------------------------------------------------------------>
+      </div>
+
+      <span>Don't have an account yet ? You can register here :&nbsp;</span>
+      <a class="register-link" href="#register-form">Register</a>
+    </form>
+  </div>
+  <!-- Register Form -->
+  <div class="form-popup-register" id="register-form">
+    <form method="post" action="?" class="form-container">
+      <a class="close-button" id="close-popup" href=""><img src="/front/static/imgs/close-icon.png" alt="close" /></a>
+      <h1>Register</h1>
+      <p class="error">{{.Error.RegisterError}}</p>
+      <label for="email">Email*</label>
+      <br />
+      <input type="email" autocomplete="off" placeholder="Enter Email" name="email" required />
+      <br />
+      <label for="username">Username</label>
+      <br />
+      <input type="text" autocomplete="off" placeholder="Enter Username" name="username" required />
+      <br />
+      <label for="password">Password*</label>
+      <br />
+      <input type="password" autocomplete="off" placeholder="Enter Password" name="psw" required />
+      <br />
+      <div class="pass-info">
+        <span>- Must be atleast 8 characters</span>
+        <br>
+        <span>- Must contain 1 capitalize letter, 1 number and 1 special character</span>
+      </div>
+      <br>
+      <label for="confimrm-password">Confirm Password*</label>
+      <br />
+      <input type="password" autocomplete="off" placeholder="Confirm Password" name="confirm-psw" onpaste="return false"
+        required />
+      <br />
+      <span style="font-size: 12px">* required fields</span>
+      <br />
+      <button style="margin-top: 5px" type="submit" class="btn">
+        Register
+      </button>
+
+      <a class="login-link" href="#login-form">Sign-in</a><br>
+    </form>
+  </div>
+  <!-- Breadcrumb -->
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><span aria-current="page">Post</span></li>
+    </ul>
+  </nav>
+  <!-- Content -->
+  <div class="content">
+    <section class="center">
+      <div class="section-style">
+        {{range .Posts}}
+        <div class="topic-post">
+          <header class="topic-post-header">
+            <h2 class="topic-post-title">{{.Name}}</h2>
+            <img class="post-pfp" src="{{.CreatorImageProfile}}" alt="" />
+            <p class="topic-post-author">{{.NameCreator}}</p>
+            <time datetime="2024-02-14T00:00:00Z" class="topic-post-date">{{.CreationDate}}</time>
+          </header>
+          <div class="topic-post-categories">
+            {{range .NameCategories}}
+            {{.}}
+            <br>
+            {{end}}
+          </div>
+          <section class="topic-post-content">
+            {{.Description}}
+            <img src="{{.ImagePath}}">
+          </section>
+          <div class="post-likes-dislikes">
+            <form action="" method="post">
+              {{if or (eq $.User.Role 1) (eq $.User.Role 2)}} <button type="submit" name="delete-post"
+                value="delete-post" style="text-align: left; float: left; color: rgb(255, 0, 0);">Delete</button>{{end}}
+              <button type="submit" name="like/dislike-post" value="like" {{if ne $.User.Connected 1}} disabled
+                {{end}}>Like</button>{{.Likes.Quantity}}
+              <button type="submit" name="like/dislike-post" value="dislike" {{if ne $.User.Connected 1}} disabled
+                {{end}}>Dislike</button>{{.Dislikes.Quantity}}
+              {{if eq $.User.Role 1}}
+              <button type="submit" name="report-post" value="{{.Id}}"
+                style="text-align: right; float: right; color: rgb(255, 0, 0);">Report</button>
+              {{end}}
+            </form>
+          </div>
+        </div>
+        {{end}}
+        <!-- Comment Post -->
+        <div class="comment-section">
+          <h2>Comment(s)</h2>
+          <div class="reply-form">
+            <form action="" method="post">
+              <div class="inner-reply-form">
+                <h2>Comment</h2>
+                <p class="error">{{.Error.CreatCommentError}}</p>
+                <textarea name="text" id="text" cols="30" rows="10" placeholder="Enter your message"></textarea>
+                <button {{if ne $.User.Connected 1}} disabled {{end}} type="submit">SEND</button>
+              </div>
+            </form>
+          </div>
+          {{range .Comments}}
+          <article class="comment-post">
+            <header class="topic-post-header">
+              <img class="post-pfp" src="{{.CreatorImagePath}}" alt="" />
+              <p class="topic-post-author">{{.NameCreator}}</p>
+              <time datetime="2024-02-14T00:00:00Z" class="topic-post-date">{{.CreationDate}}</time>
+            </header>
+            <section class="comment-post-content">
+              {{.Text}}
+            </section>
+            <div class="post-likes-dislikes">
+              <form action="" method="post">
+                {{if or (eq $.User.Role 1) (eq $.User.Role 2) }}
+                <button type="submit" name="delete-comment" value="{{.Id}}"
+                  style="text-align: left; float: left; color: rgb(255, 0, 0);">Delete</button>
+                {{end}}
+                <button type="submit" name="like-comment" value="{{.Id}}" {{if ne $.User.Connected 1}} disabled
+                  {{end}}>Like</button>{{.Likes.Quantity}}
+                <button type="submit" name="dislike-comment" value="{{.Id}}" {{if ne $.User.Connected 1}} disabled
+                  {{end}}>Dislike</button>{{.Dislikes.Quantity}}
+              </form>
+            </div>
+          </article>
+          {{end}}
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- Footer -->
+  <footer>Copyright</footer>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+.post-form {
+  margin: auto;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: rgb(166, 166, 166);
+  display: flex;
+  margin-top: 10px;
+}
+
+.inner-post-form h2 {
+  margin-top: 10px;
+  text-align: center;
+  color: black;
+}
+
+.inner-post-form {
+  position: relative;
+  margin: auto;
+  width: 90%;
+  height: auto;
+  text-align: center;
+  padding: 0 0 20px 0;
+}
+
+.inner-post-form #post-title {
+  text-align: center;
+  font-weight: bold;
+}
+
+.inner-post-form #post-title {
+  width: 90%;
+  height: 25px;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 0 20px 0px;
+  border: none;
+  background-color: #f1f1f1;
+}
+
+.inner-post-form input::placeholder {
+  text-align: center;
+}
+
+.inner-post-form #description {
+  width: 90%;
+  height: 300px;
+  border-radius: 5px;
+  resize: none;
+  padding: 5px;
+  margin: 5px 0 12px 0;
+  border: none;
+  background-color: #f1f1f1;
+}
+
+.inner-post-form #description:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.inner-post-form button[type="submit"] {
+  border-radius: 5px;
+  width: 25%;
+}
+
+input#file[type="file"] {
+  border-radius: 5px;
+  width: 25%;
+}
+
+.center article select {
+  width: 200px;
+  padding: 5px;
+  margin: 5px 0 12px 0;
+  border-radius: 5px;
+  -ms-overflow-style: none;
+  /* For Internet Explorer  10+ */
+}
+
+.center article select::-webkit-scrollbar {
+  /* For WebKit Browsers */
+  width: 0;
+}
+
+.center article select option {
+  text-align: center;
+  padding: 5px;
+}

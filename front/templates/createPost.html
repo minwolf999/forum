@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum - CreatePost</title>
+  <link rel="stylesheet" type="text/css" href="/front/static/style.css" />
+  <link rel="stylesheet" type="text/css" href="/front/static/create-post-style.css" />
+</head>
+
+<body onbeforeunload="var xhr = new XMLHttpRequest(); xhr.open('GET', '/bye', true); xhr.send();" >
+  <!-- Header -->
+  <header>
+    <h1>Forum</h1>
+  </header>
+  <!-- navigation bar -->
+  <nav class="nav-bar">
+    <ul>
+      <li style="float: left">
+        <a class="home" href="/"><img src="/front/static/imgs/home.png" alt="Home" /></a>
+      </li>
+      {{if eq .User.Connected 1}}
+      <li style="float: right">
+        <a class="open-form" href="/"><b>Deconnexion</b></a>
+      </li>
+      <li style="float: right">
+        <a href="/profile"><b>{{.User.Username}}</b></a>
+      </li>
+      {{end}}
+    </ul>
+  </nav>
+  <!-- mobile navigation bar -->
+  <nav class="mobile-nav-bar">
+    <a class="home" href="/"><img src="/front/static/imgs/home.png" alt="Home" /></a>
+    <label for="mobile-menu" tabindex="0" style="float: right">Menu</label>
+    <input id="mobile-menu" type="checkbox">
+    <div class="menu">
+      <ul>
+        {{if eq .User.Connected 1}}
+        <li>
+          <a href="/profile"><b>{{.User.Username}}</b></a>
+        </li>
+        <li>
+          <a class="open-form" href="/disconnect"><b>Deconnexion</b></a>
+        </li>
+        {{end}}
+      </ul>
+    </div>
+  </nav>
+  <!-- Breadcrumb -->
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><span aria-current="page">Create-Post</span></li>
+    </ul>
+  </nav>
+  <!-- Content -->
+  <div class="content">
+    <section class="center">
+      <article>
+        <form action="" method="post" enctype="multipart/form-data">
+          <div class="post-form">
+            <div class="inner-post-form">
+              <h2>Create a post</h2>
+              <p class="error">{{.Error.CreatPostError}}</p>
+              <span>Title</span><br />
+              <input type="text" name="post-title" id="post-title" placeholder="Enter a Title" />
+              <br />
+              Choose atleast 1 up to 3 categories <br>
+              <select name="categories" id="categories" multiple>
+                {{range .Categories}}
+                <option value="{{.Id}}">{{.Name}}</option>
+                {{end}}
+              </select>
+              <br />
+              <textarea name="description" id="description" placeholder="Enter your message"></textarea>
+              <br />
+              <input type="file" name="Img" size="">
+              <button type="submit">POST</button>
+            </div>
+          </div>
+        </form>
+      </article>
+    </section>
+  </div>
+  <!-- Footer -->
+  <footer>Copyright</footer>
+</body>
+
+</html>

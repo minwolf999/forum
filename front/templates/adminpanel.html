@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum - AdminPanel</title>
+  <link rel="stylesheet" type="text/css" href="/front/static/style.css" />
+  <link rel="stylesheet" type="text/css" href="/front/static/topics.css">
+  <link rel="stylesheet" type="text/css" href="/front/static/adminpanel.css" />
+</head>
+
+<body onbeforeunload="var xhr = new XMLHttpRequest(); xhr.open('GET', '/bye', true); xhr.send();">
+  <!-- Header -->
+  <header>
+    <h1>Forum</h1>
+  </header>
+  <!-- navigation bar -->
+  <nav class="nav-bar">
+    <ul>
+      <li style="float: left">
+        <a class="home" href="/"><img src="/front/static/imgs/home.png" alt="Home" /></a>
+      </li>
+      {{if eq .User.Connected 1}}
+      <li style="float: right">
+        <a class="open-form" href="/disconnect"><b>Deconnexion</b></a>
+      </li>
+      <li style="float: right">
+        <a href="/profile"><b>{{.User.Username}}</b></a>
+      </li>
+      <li style="float: right">
+        <a href="/adminPanel"><b>AdminPanel</b></a>
+      </li>
+      {{end}}
+    </ul>
+  </nav>
+  <!-- mobile navigation bar -->
+  <nav class="mobile-nav-bar">
+    <a class="home" href="/"><img src="front/static/imgs/home.png" alt="Home" /></a>
+    <label for="mobile-menu" tabindex="0" style="float: right">Menu</label>
+    <input id="mobile-menu" type="checkbox" />
+    <div class="menu">
+      <ul>
+        {{if eq .User.Connected 1}}
+        <li style="float: right">
+          <a href="/adminPanel"><b>AdminPanel</b></a>
+        </li>
+        <li>
+          <a href="/profile"><b>{{.User.Username}}</b></a>
+        </li>
+        <li>
+          <a class="open-form" href="/disconnect"><b>Deconnexion</b></a>
+        </li>
+        {{end}}
+      </ul>
+    </div>
+  </nav>
+  <!-- Breadcrumb -->
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/profile">profile</a></li>
+      <li><span aria-current="page">AdminPanel</span></li>
+    </ul>
+  </nav>
+  <!-- Content -->
+  <div class="content">
+    <section class="center">
+      <h1>AdminPanel</h1>
+      <div class="moderation-panel" style="margin-bottom: 20px;">
+        <form action="/adminPanel" method="post" class="promote">
+          <span>Mod requests</span>
+          <select name="all-users" id="users">
+            {{range .AllReqMod}}
+            <option value="{{.Id}}">{{.Username}}</option>
+            {{end}}
+          </select>
+          <div class="test">
+            <button name="promote" value="promote" type="submit">Promote</button>
+            <button name="deny" value="deny" type="submit">Deny</button>
+          </div>
+        </form>
+        <form action=" /adminPanel" method="post" class="demote">
+          <span>All Mods</span>
+          <select name="all-mod" id="users">
+            {{range .AllMod}}
+            <option value="{{.Id}}">{{.Username}}</option>
+            {{end}}
+          </select>
+          <button name="demote" value="demote" type="submit">Demote</button>
+        </form>
+      </div>
+      <h2>Report posts</h2>
+      <div class="box-topic">
+        <div class="inner-box-topic">
+          <div class="topic-header">
+            <ul>
+              <li>Title</li>
+              <li>Author</li>
+              <li>Message</li>
+              <li style="text-align: center">Categorie(s)</li>
+              <li style="text-align: center">Reply(s)</li>
+              <li style="text-align: center">Like(s)</li>
+            </ul>
+          </div>
+          <div class="topics">
+            {{range .ReportPosts}}
+            <a href="/post/{{.Id}}" class="topic-link">
+              <ul>
+                <li>
+                  <div class="topic-name">{{.Name}}</div>
+                </li>
+                <li>
+                  <div class="topic-author-name">{{.NameCreator}}</div>
+                </li>
+                <li>
+                  <div class="topic-description">
+                    {{.Description}}
+                  </div>
+                </li>
+                <li style="text-align: center">
+                  {{range .NameCategories}}
+                  {{.}}
+                  <br>
+                  {{end}}
+                </li>
+                <li style="text-align: center">{{.ReplyQuantity}}</li>
+                <li style="text-align: center">{{.Likes.Quantity}}</li>
+                <form formaction="" method="post" style="position: absolute; right: 1%; top: 40%;">
+                  <button type="submit" name="delete-report-post" value="{{.Id}}">-</button>
+                </form>
+              </ul>
+            </a>
+            {{end}}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- Footer -->
+  <footer>Copyright</footer>
+</body>
+
+</html>
